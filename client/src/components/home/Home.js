@@ -24,9 +24,9 @@ export const Home = () => {
                 <img src="./images/four_slider_img01.png" alt="hero" />
                 <div id="home-page">
                     <h1>Latest Games</h1>
-                    
+
                     {games.length > 0 
-                       ? games.map(x => <LatestGame game={x}/>)
+                       ? games.map(x => <LatestGame key={x._id} game={x}/>)
                        :  <p className="no-articles">No games yet</p>
                     }                
                 </div>
