@@ -1,14 +1,25 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from "react";
 
-import './App.css';
+import * as gameService from './service/gameService';
 import { Catalog } from './components/catalog/Catalog';
 import { CreateGame } from './components/createGame/CreateGame';
 import { Header } from './components/header/Header';
 import { Home } from './components/home/Home';
 import { Login } from './components/login/Login';
 import { Register } from './components/register/Register';
+import './App.css';
 
 function App() {
+    const [games, setGames] = useState([]);
+
+    useEffect(() => {
+        gameService.getAll()
+            .then(result => {
+                setGames(result);
+            });
+    }, []);
+
     return (
         <div id="box">
             <Header />
@@ -16,11 +27,11 @@ function App() {
             {/* Main Content */}
             <main id="main-content">
                 <Routes>
-                    <Route path="/" element={<Home />}/>
+                    <Route path="/" element={<Home games={games}/>}/>
                     <Route path="/login" element={<Login />}/>
                     <Route path="/register" element={<Register />}/>
                     <Route path="/create" element={<CreateGame />}/>
-                    <Route path="/catalog" element={<Catalog />}/>
+                    <Route path="/catalog" element={<Catalog games={games}/>}/>
                 </Routes>                
             </main>
                                     
